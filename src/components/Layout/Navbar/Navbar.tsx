@@ -1,8 +1,21 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import styles from './Navbar.module.scss'
+import Link from 'next/link'
 
 export const Navbar: FC = () => {
-	return <div>Navbar</div>
+	return (
+		<div className={styles.navbar}>
+			<h2 title='Employees'>
+				<Link href={'/'}>Employees</Link>
+			</h2>
+			<h2 title='Statistics'>
+				<Link href={'/statistics'}>Statistics</Link>
+			</h2>
+			<h2 title='Logout'>
+				<Link href={'/login'}>Logout</Link>
+			</h2>
+		</div>
+	)
 }
 
 /* 

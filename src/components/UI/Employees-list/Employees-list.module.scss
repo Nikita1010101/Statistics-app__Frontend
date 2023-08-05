@@ -1,0 +1,7 @@
+.title {
+	@apply my-14 flex justify-center items-center;
+
+	h1 {
+		@apply text-3xl font-semibold;
+	}
+}

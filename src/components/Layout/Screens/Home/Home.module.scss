@@ -1,0 +1,39 @@
+.home {
+	@apply my-10;
+
+	.title {
+		@apply my-14 flex justify-center items-center;
+
+		h1 {
+			@apply text-3xl font-semibold;
+		}
+	}
+
+	.user_info {
+		@apply flex;
+
+		.names {
+			@apply w-1/2 text-center;
+
+			.name {
+				@apply my-5 font-medium;
+			}
+
+			hr {
+				@apply border-2;
+			}
+		}
+
+		.values {
+			@apply w-1/2 text-center;
+
+			.value {
+				@apply my-5 font-medium;
+			}
+
+			hr {
+				@apply border-2;
+			}
+		}
+	}
+}

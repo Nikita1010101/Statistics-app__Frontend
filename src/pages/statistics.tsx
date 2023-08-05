@@ -3,6 +3,8 @@ import { NextPage } from 'next'
 
 import { Statistics } from 'components/Layout/Screens/Statistics/Statistics'
 
-export const StatisticsPage: NextPage = () => {
+const StatisticsPage: NextPage = () => {
 	return <Statistics />
 }
+
+export default StatisticsPage

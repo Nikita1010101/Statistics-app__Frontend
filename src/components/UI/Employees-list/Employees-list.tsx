@@ -6,10 +6,16 @@ import { IUser } from '@/types/user.type'
 
 export const EmployeesList: FC<{ users: IUser[] }> = ({ users }) => {
 	return (
-		<div className={styles.users_list}>
-			{users.map(({ id, ...user }) => (
-				<EmployeeItem key={id} {...user} />
-			))}
-		</div>
+		<>
+			<div className={styles.title}>
+				<h1>Employees</h1>
+				<hr />
+			</div>
+			<div className={styles.users_list}>
+				{users.map(({ id, ...user }) => (
+					<EmployeeItem key={id} {...user} />
+				))}
+			</div>
+		</>
 	)
 }

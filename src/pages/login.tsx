@@ -3,6 +3,8 @@ import { NextPage } from 'next'
 
 import { Login } from 'components/Layout/Screens/Login/Login'
 
-export const LoginPage: NextPage = () => {
+const LoginPage: NextPage = () => {
 	return <Login />
 }
+
+export default LoginPage
