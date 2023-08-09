@@ -1,18 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import { IAuthInitialState } from './auth.interface'
-import { login, logout } from './auth.action'
+import { login, logout, refresh } from './auth.action'
 
 export const initialState: IAuthInitialState = {
 	is_loading: false,
-	access_token: '',
 	user: null
 }
 
 export const authSlice = createSlice({
 	name: 'auth',
 	initialState,
-	reducers: {},
+	reducers: {
+		removeUser: state => {
+			state.user = null
+		}
+	},
 	extraReducers: builder =>
 		builder
 			.addCase(login.pending, state => {
@@ -20,12 +23,10 @@ export const authSlice = createSlice({
 			})
 			.addCase(login.fulfilled, (state, { payload }) => {
 				state.is_loading = false
-				state.access_token = payload?.access_token || ''
-				state.user = payload?.user || null
+				state.user = payload?.user
 			})
 			.addCase(login.rejected, state => {
 				state.is_loading = false
-				state.access_token = ''
 				state.user = null
 			})
 			.addCase(logout.pending, state => {
@@ -33,12 +34,21 @@ export const authSlice = createSlice({
 			})
 			.addCase(logout.fulfilled, state => {
 				state.is_loading = false
-				state.access_token = ''
 				state.user = null
 			})
 			.addCase(logout.rejected, state => {
 				state.is_loading = false
-				state.access_token = ''
+				state.user = null
+			})
+			.addCase(refresh.pending, state => {
+				state.is_loading = true
+			})
+			.addCase(refresh.fulfilled, state => {
+				state.is_loading = false
+				state.user = null
+			})
+			.addCase(refresh.rejected, state => {
+				state.is_loading = false
 				state.user = null
 			})
 })

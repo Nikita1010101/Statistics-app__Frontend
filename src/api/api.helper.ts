@@ -1,3 +1,4 @@
 export const getContentType = () => ({
-	'Content-type': 'application/json',
+	'Content-Type': 'application/json',
+	Accept: 'application/json'
 })

@@ -6,6 +6,7 @@ export interface ILoginBody {
 }
 
 export interface ILoginData {
-	access_token: string
 	user: IUser | null
+	access_token: string
+	refresh_token: string
 }

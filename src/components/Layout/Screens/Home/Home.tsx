@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styles from './Home.module.scss'
 
 import { IUser } from '@/types/user.type'
@@ -6,19 +6,19 @@ import { EmployeesList } from '@/components/UI/Employees-list/Employees-list'
 import { Layout } from '../../Layout'
 import { useTypedSelector } from '@/hooks/use-typed-selector'
 import { formatBirthDate } from '@/utils/format-birth-date'
-import { AuthService } from '@/services/auth/auth.service'
+import { UserService } from '@/services/user/user.service'
 
-export const Home: FC<{ users: IUser[] }> = ({ users }) => {
-	console.log(users)
+export const Home: FC = () => {
 	const { user } = useTypedSelector(state => state.auth)
 	const formated_birth_date = formatBirthDate(String(user?.birth_date))
 
+	const [users, setUsers] = useState([] as IUser[])
+
 	useEffect(() => {
-		if (user === null) {
-			;(async () => {
-				await AuthService.refresh()
-			})()
-		}
+		;(async () => {
+			const { data: users } = await UserService.getUsers()
+			setUsers(users)
+		})()
 	}, [])
 
 	return (

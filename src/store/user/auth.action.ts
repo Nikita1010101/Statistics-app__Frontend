@@ -15,11 +15,26 @@ export const login = createAsyncThunk<ILoginData, ILoginBody>(
 	}
 )
 
-export const logout = createAsyncThunk<ILoginData | null>('auth/logout', async () => {
-	try {
-		const { data } = await AuthService.logout()
-		return data
-	} catch (error) {
-		return null
+export const logout = createAsyncThunk<string>(
+	'auth/logout',
+	async (_, thinkApi) => {
+		try {
+			const { data } = await AuthService.logout()
+			return data
+		} catch (error) {
+			return thinkApi.rejectWithValue(error)
+		}
 	}
-})
+)
+
+export const refresh = createAsyncThunk<ILoginData>(
+	'auth/refresh',
+	async (_, thinkApi) => {
+		try {
+			const { data } = await AuthService.refresh()
+			return data
+		} catch (error) {
+			return thinkApi.rejectWithValue(error)
+		}
+	}
+)

@@ -1,26 +1,26 @@
 import { AxiosResponse } from 'axios'
 
-import { instance } from '@/api/api.instance'
+import { instance } from '@/api/api.interceptor/user'
 import { IStatistics, IUser } from '@/types/user.type'
 
 export const UserService = {
 	async getUsers(): Promise<AxiosResponse<IUser[]>> {
-		return await instance.get('/users')
+		return await instance.get('/user/users')
 	},
 
 	async getStatistics(): Promise<AxiosResponse<IStatistics>> {
-		return await instance.get('/statistics')
+		return await instance.get('/user/statistics')
 	},
 
 	async addUser(user: IUser): Promise<AxiosResponse<IUser>> {
-		return await instance.post('/add', user)
+		return await instance.post('/user/add', user)
 	},
 
 	async removeUser(user_id: number): Promise<AxiosResponse<IUser>> {
-		return await instance.post('/remove', { user_id })
+		return await instance.delete('/user/remove', { user_id })
 	},
 
 	async editUser(user: IUser): Promise<AxiosResponse<IUser>> {
-		return await instance.post('/edit', user)
+		return await instance.patch('/user/edit', user)
 	}
 }
