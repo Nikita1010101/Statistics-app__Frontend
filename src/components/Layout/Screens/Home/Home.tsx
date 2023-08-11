@@ -1,25 +1,21 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC } from 'react'
 import styles from './Home.module.scss'
 
-import { IUser } from '@/types/user.type'
 import { EmployeesList } from '@/components/UI/Employees-list/Employees-list'
 import { Layout } from '../../Layout'
 import { useTypedSelector } from '@/hooks/use-typed-selector'
 import { formatBirthDate } from '@/utils/format-birth-date'
-import { UserService } from '@/services/user/user.service'
+import { useUser } from '@/hooks/use-user'
 
 export const Home: FC = () => {
 	const { user } = useTypedSelector(state => state.auth)
+	const { users, is_loading } = useUser.getUsers()
+
 	const formated_birth_date = formatBirthDate(String(user?.birth_date))
 
-	const [users, setUsers] = useState([] as IUser[])
-
-	useEffect(() => {
-		;(async () => {
-			const { data: users } = await UserService.getUsers()
-			setUsers(users)
-		})()
-	}, [])
+	const user_role = user
+		? user?.roles?.some(item => item.role === 'HR')
+		: undefined
 
 	return (
 		<Layout title={'Employees'} description={'Employees'}>
@@ -56,12 +52,20 @@ export const Home: FC = () => {
 						<div className={styles.value}>{user?.salary_amount || 'Empty'}</div>
 						<hr />
 						<div className={styles.value}>
-							{user?.roles?.[0]?.role || 'Empty'}
+							{user_role
+								? 'HR'
+								: user_role !== undefined
+								? 'EMPLOYEE'
+								: 'Empty'}
 						</div>
 						<hr />
 					</div>
 				</div>
-				<EmployeesList users={users} />
+				<EmployeesList
+					users={users}
+					title={'Employees'}
+					is_loading={is_loading}
+				/>
 			</div>
 		</Layout>
 	)

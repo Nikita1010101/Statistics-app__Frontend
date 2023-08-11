@@ -5,3 +5,9 @@
 		@apply text-3xl font-semibold;
 	}
 }
+
+.users_list {
+	h2 {
+		@apply p-8 text-2xl font-medium border-[3px] border-gray-400 rounded-xl;
+	}
+}

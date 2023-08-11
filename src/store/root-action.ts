@@ -1,5 +1,5 @@
-import * as authActions from '@/store/user/auth.action'
-import { authSlice } from './user/auth.slice'
+import * as authActions from '@/store/auth/auth.action'
+import { authSlice } from './auth/auth.slice'
 
 export const rootActions = {
   ...authActions,

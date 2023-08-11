@@ -15,9 +15,21 @@ export interface IUser {
 	roles?: IRole[]
 }
 
+export  interface ICreateUser extends IUser {
+	userRoles: string[]
+}
+
 export interface IStatistics {
 	hired_employees: number
 	fired_employees: number
-	upcomingSalaries: Pick<IUser, 'birth_date' | 'salary_amount'>[]
+	upcomingSalaries: IUpcomingSalaries[]
 	upcomingBirthdays: IUser[]
 }
+
+
+export interface IUpcomingSalaries {
+	month: string
+	salaries_amount: number
+}
+
+export type TEmployeesSettings = 'Add' | 'Edit' | 'Remove' | '' 

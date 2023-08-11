@@ -1,6 +1,7 @@
 import { IUser } from '@/types/user.type'
 
-export interface IAuthInitialState {
+export interface IEmployeesList {
+	users?: IUser[]
+	title: string
 	is_loading: boolean
-	user: IUser | null
 }

@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-import { AuthService } from '@/services/auth/auth.service'
-import { getAccessToken } from '@/services/token/token.helper'
 import { getContentType } from './api.helper'
+import store from '@/store/store'
+import { refresh } from '@/store/auth/auth.action'
 
 export const instance = axios.create({
 	baseURL: `${process.env.SERVER_URL}/api`,
@@ -11,7 +11,7 @@ export const instance = axios.create({
 })
 
 instance.interceptors.request.use(request => {
-	const access_token = getAccessToken()
+	const access_token = store.getState().auth.access_token
 
 	request.headers.Authorization = `Bearer ${access_token}`
 
@@ -23,6 +23,10 @@ instance.interceptors.response.use(
 	async error => {
 		const originalRequest = error.config
 
+		if (error.response?.status === 400) {
+			alert('Data Error!')
+		}
+
 		if (
 			error.response?.status === 401 &&
 			error.config &&
@@ -30,11 +34,23 @@ instance.interceptors.response.use(
 		) {
 			originalRequest._isRetry = true
 			try {
-				await AuthService.refresh()
+				await store.dispatch(refresh())
 				return instance.request(originalRequest)
 			} catch (error) {
 				window.location.href = '/login'
 			}
+		}
+
+		if (error.response?.status === 403) {
+			window.location.href = '/login'
+		}
+
+		if (error.response?.status === 404) {
+			window.location.href = '/login'
+		}
+
+		if (error.response?.status === 500) {
+			alert('Server Data Error!!!')
 		}
 
 		return error
