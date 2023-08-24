@@ -33,3 +33,5 @@ export interface IUpcomingSalaries {
 }
 
 export type TEmployeesSettings = 'Add' | 'Edit' | 'Remove' | '' 
+
+export type TUserKeys = keyof IUser & undefined
